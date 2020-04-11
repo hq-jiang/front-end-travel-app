@@ -4,7 +4,9 @@
   "description": "A travel app that shows weather and pictures of the destination",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build-dev": "webpack --config webpack.dev.js",
+    "build-prod": "webpack --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,11 @@
   },
   "homepage": "https://github.com/hq-jiang/front-end-travel-app#readme",
   "devDependencies": {
-    "jest": "^25.3.0"
+    "html-webpack-plugin": "^4.2.0",
+    "jest": "^25.3.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-merge": "^4.2.2"
   },
   "dependencies": {
     "express": "^4.17.1"
