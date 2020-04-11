@@ -1,0 +1,32 @@
+{
+  "name": "travel-app",
+  "version": "1.0.0",
+  "description": "A travel app that shows weather and pictures of the destination",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hq-jiang/front-end-travel-app.git"
+  },
+  "keywords": [
+    "javascript",
+    "html",
+    "css",
+    "travel",
+    "webapp"
+  ],
+  "author": "Hanqiu Jiang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hq-jiang/front-end-travel-app/issues"
+  },
+  "homepage": "https://github.com/hq-jiang/front-end-travel-app#readme",
+  "devDependencies": {
+    "jest": "^25.3.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
