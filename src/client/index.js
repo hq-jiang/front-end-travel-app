@@ -1,3 +1,3 @@
-import './styles/style.scss'
+import './styles/style.scss';
 
-alert("Hello World")
+// alert('Hello World');

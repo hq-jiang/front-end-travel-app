@@ -11,6 +11,16 @@ module.exports = {
   },
   module: {
     rules: [
+      // Javascript loaders
+      {
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'eslint-loader',
+        options: {
+          emitWarning: true
+        }
+      },
       {
         test: /\.m?js$/,
         exclude: /node_modules/,
@@ -21,6 +31,7 @@ module.exports = {
           }
         }
       },
+      // Style loaders
       {
         test: /\.s[ac]ss$/i,
         use: [
