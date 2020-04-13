@@ -1,16 +1,30 @@
-h2 {
-  color: red;
+@font-face { font-family: Silkscreen; src: url('../fonts/slkscr.ttf'); }
+
+header {
+  grid-area: head;
+  border: 3px solid red;
+  margin: 10px;
+  h1 {
+    padding-left: 15px;
+    font-family: Silkscreen;
+  }
+
 }
 
-body {
+.main-grid {
   display: grid;
   grid-template-areas:
     "head head head"
     "main main main"
     "foot foot foot";
-  grid-template-columns: 1fr;
-  grid-template-rows: 100px 100px 100px 100px 100px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px 500px 1fr;
 }
+
+.form-grid {
+  font-family: Silkscreen;
+}
+
 
 
 .container {
@@ -23,4 +37,8 @@ body {
 .bg-island {
   background-image: url("../images/island.jpg");
   background-size: cover;
+}
+
+.bg-gradient {
+  background: linear-gradient(rgba(200, 200, 200, 0.50), rgba(0, 0, 0, 0.70)),
 }

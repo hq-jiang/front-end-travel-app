@@ -48,10 +48,29 @@ module.exports = {
       // Image loaders
       {
         test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader',
+        use: [ {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'images/'
+          }
+
+        }
+
         ],
       },
+      // Fonts loaders
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts/'
+            }
+          }
+        ]
+      }
     ],
   },
   plugins: [
