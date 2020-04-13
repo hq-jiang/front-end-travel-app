@@ -18,6 +18,7 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'eslint-loader',
         options: {
+          // Do not break build upon warning
           emitWarning: true
         }
       },
@@ -35,18 +36,22 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          // Creates `style` nodes from JS strings
           MiniCssExtractPlugin.loader,
-          // Translates CSS into CommonJS
           'css-loader',
-          // Compiles Sass to CSS
           'sass-loader',
         ],
       },
       {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
-      }
+      },
+      // Image loaders
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader',
+        ],
+      },
     ],
   },
   plugins: [
