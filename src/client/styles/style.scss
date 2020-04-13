@@ -1,3 +1,21 @@
 h2 {
   color: red;
 }
+
+body {
+  display: grid;
+  grid-template-areas:
+    "head head head"
+    "main main main"
+    "foot foot foot";
+  grid-template-columns: 1fr;
+  grid-template-rows: 100px 100px 100px 100px 100px;
+}
+
+
+.container {
+  display: flex;
+  grid-area: main;
+  flex-direction: column;
+  align-items: center;
+}
