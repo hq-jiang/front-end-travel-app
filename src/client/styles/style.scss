@@ -22,7 +22,7 @@ header {
 
 button {
   margin-top: 20px;
-  width: 40%;
+  width: 50%;
   height: 30px;
   font-family: $main-font;
   background-image: url("../images/starry-sky.jpg");
@@ -30,6 +30,7 @@ button {
   border-radius: 10px;
   color: snow;
   font-size: 20px;
+
 }
 
 button::-moz-focus-inner {
@@ -44,7 +45,7 @@ button::-moz-focus-inner {
     "main main main"
     "foot foot foot";
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 150px 1fr 50px;
+  grid-template-rows: 120px 1fr 50px;
 
 }
 
@@ -59,14 +60,16 @@ button::-moz-focus-inner {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     /* grid-gap: 10px 15px; for Desktop version*/
-    align-items: center;
+    align-items: left;
+    justify-content: left;
+
+    width: 100%;
 
     .grid-item-label {
       display: flex;
       align-items: center;
       padding: 5px;
       margin-top: 5px;
-      width: 200px;
     }
 
     .grid-item-input {
@@ -74,8 +77,6 @@ button::-moz-focus-inner {
       align-items: center;
       padding: 5px;
       margin-bottom: 5px;
-
-      width: 300px;
     }
   }
 }
