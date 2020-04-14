@@ -4,6 +4,7 @@
   "description": "A travel app that shows weather and pictures of the destination",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/server/server.js",
     "test": "jest",
     "build-dev": "webpack --config webpack.dev.js",
     "build-prod": "webpack --config webpack.prod.js",
@@ -49,6 +50,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "express": "^4.17.1"
   }
 }
