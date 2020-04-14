@@ -1,51 +1,58 @@
-@import url("./background.scss");
 @font-face { font-family: Silkscreen; src: url('../fonts/slkscr.ttf'); }
-
 
 html {
   font-family: Silkscreen;
 }
 
 body {
-
   border: 3px solid blue;
+}
 
-  header {
-    grid-area: head;
-    border: 3px solid red;
-    margin: 10px;
-    h1 {
-      padding-left: 15px;
-    }
+footer {
+  border: 3px solid red;
+  grid-area: foot;
+  margin: 10px;
+}
+
+header {
+  grid-area: head;
+  border: 3px solid red;
+  margin: 10px;
+  h1 {
+    padding-left: 15px;
   }
 
-  .main-grid {
-    display: grid;
-    height: 1000px;
-    grid-template-areas:
-      "head head head"
-      "main main main"
-      "foot foot foot";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 1fr 50px;
-  }
+}
 
-  .main-container {
-    display: flex;
-    grid-area: main;
-    flex-direction: column;
-    align-items: center;
-    border: 3px solid red;
-    margin: 10px;
-  }
+.main-grid {
+  display: grid;
+  height: 1000px;
+  grid-template-areas:
+    "head head head"
+    "main main main"
+    "foot foot foot";
+  // grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 100px 1fr 50px;
+}
 
-  .form-grid {
-  }
+.form-grid {
+}
 
-  footer {
-    border: 3px solid red;
-    grid-area: foot;
-    margin: 10px;
-  }
+.container {
+  display: flex;
+  grid-area: main;
+  flex-direction: column;
+  align-items: center;
+  border: 3px solid red;
+  margin: 10px;
+}
 
+.bg-island {
+  background-image: url("../images/island.jpg");
+  background-size: cover;
+}
+
+.bg-gradient {
+  background: linear-gradient(rgba(200, 200, 200, 0.50), rgba(0, 0, 0, 0.70));
+  background-repeat: no-repeat;
 }
