@@ -4,6 +4,11 @@
 }
 
 .bg-gradient {
-  background: linear-gradient(rgba(200, 200, 200, 0.50), rgba(0, 0, 0, 0.70));
-  background-repeat: no-repeat;
+  background: linear-gradient(rgba(255, 150, 46, 1.0), rgba(70, 45, 0, 1.0));
+  background-repeat: no-repeat
+}
+
+.bg-desert {
+  background-image: url("../images/desert-night.jpg");
+  background-size: cover;
 }

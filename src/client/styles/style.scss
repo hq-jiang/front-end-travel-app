@@ -1,12 +1,26 @@
 @import url("./background.scss");
 @font-face { font-family: Silkscreen; src: url('../fonts/slkscr.ttf'); }
 
+$fontsize-header: 70px;
+
+
 html {
   font-family: Silkscreen;
+  color: white;
 }
 
 body {
-  border: 3px solid blue;
+
+  header {
+    grid-area: head;
+    margin: 10px;
+
+    h1 {
+      font-size: $fontsize-header;
+      padding-left: 15px;
+      text-align: center;
+    }
+  }
 
   .main-grid {
     display: grid;
@@ -16,7 +30,7 @@ body {
       "main main main"
       "foot foot foot";
     // grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 100px 1fr 50px;
+    grid-template-rows: 150px 1fr 50px;
   }
 
   .form-grid {
@@ -27,22 +41,10 @@ body {
     grid-area: main;
     flex-direction: column;
     align-items: center;
-    border: 3px solid red;
     margin: 10px;
-  }
-
-
-  header {
-    grid-area: head;
-    border: 3px solid red;
-    margin: 10px;
-    h1 {
-      padding-left: 15px;
-    }
   }
 
   footer {
-    border: 3px solid red;
     grid-area: foot;
     margin: 10px;
   }
