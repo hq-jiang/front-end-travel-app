@@ -3,41 +3,54 @@
 
 @font-face { font-family: Silkscreen; src: url('../fonts/slkscr.ttf'); }
 
+$main-font: Silkscreen;
 $fontsize-header-mobile: 70px; // 70px for Desktop
 
 html {
-  font-family: Silkscreen;
+  font-family: $main-font;
 }
 
-body {
+header {
+  grid-area: head;
 
-  header {
-    grid-area: head;
-
-    h1 {
-      font-size: $fontsize-header-mobile;
-      padding-left: 15px;
-      text-align: center;
-      color: snow;
-    }
+  h1 {
+    font-size: $fontsize-header-mobile;
+    padding-left: 15px;
+    text-align: center;
+    color: snow;
   }
+}
 
-  .main-grid {
-    display: grid;
-    height: 1000px;
-    grid-template-areas:
-      "head head head"
-      "main main main"
-      "foot foot foot";
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 150px 1fr 50px;
-  }
+button {
+  margin-top: 20px;
+  width: 40%;
+  height: 30px;
+  font-family: $main-font;
+}
+
+.main-grid {
+  display: grid;
+  height: 1000px;
+  grid-template-areas:
+    "head head head"
+    "main main main"
+    "foot foot foot";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 150px 1fr 50px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-template-rows: auto;
     grid-gap: 10px 15px;
+    align-items: center;
 
     .grid-item-label {
       display: flex;
@@ -53,20 +66,17 @@ body {
       width: 300px;
     }
   }
+}
 
+.container {
+  display: flex;
+  grid-area: main;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
 
-
-
-  .container {
-    display: flex;
-    grid-area: main;
-    flex-direction: column;
-    align-items: center;
-    margin: 10px;
-  }
-
-  footer {
-    grid-area: foot;
-    margin: 10px;
-  }
+footer {
+  grid-area: foot;
+  margin: 10px;
 }
