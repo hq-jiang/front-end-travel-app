@@ -1,12 +1,13 @@
 @import url("./background.scss");
+@import url("./card.scss");
+
 @font-face { font-family: Silkscreen; src: url('../fonts/slkscr.ttf'); }
 
-$fontsize-header: 70px;
+$fontsize-header-mobile: 50px; // 70px for Desktop
 
 
 html {
   font-family: Silkscreen;
-  color: white;
 }
 
 body {
@@ -15,9 +16,10 @@ body {
     grid-area: head;
 
     h1 {
-      font-size: $fontsize-header;
+      font-size: $fontsize-header-mobile;
       padding-left: 15px;
       text-align: center;
+      color: snow;
     }
   }
 
@@ -28,7 +30,7 @@ body {
       "head head head"
       "main main main"
       "foot foot foot";
-    // grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 150px 1fr 50px;
   }
 
