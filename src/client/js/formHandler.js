@@ -5,6 +5,7 @@ function getDestination() {
   return processedDestination;
 }
 
+
 async function submitInputData() {
   const destination = getDestination();
 
@@ -19,8 +20,11 @@ async function submitInputData() {
     body: JSON.stringify(data),
   })
   .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
+  .then((imageUrl) => {
+    console.log('Received image resource', imageUrl);
+    console.log('Received image resource', imageUrl.imageUrl);
+    const resultImageDiv = document.getElementById('result-image');
+    resultImageDiv.innerHTML = `<img src="${imageUrl.imageUrl}" height="auto" width="100%">`;
   })
   .catch((error) => {
     console.log(error);
