@@ -2,13 +2,17 @@ var path = require('path');
 const express = require('express');
 
 // Read env variables
-// const dotenv = require('dotenv');
-// dotenv.config({ path: path.resolve(__dirname, '../../.env') });
-//
-// if (process.env.API_ID == null || process.env.API_KEY == null) {
-//   console.log("Env variables not setup correctly, exit program");
-//   process.exit(1);
-// }
+const dotenv = require('dotenv');
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+
+
+if (process.env.PIXABAY_KEY == null) {
+  console.log('Env variables not setup correctly, exit program');
+  process.exit(1);
+} else {
+  console.log('Pixabay API key:', process.env.PIXABAY_KEY)
+}
 // var textapi = new aylien({
 //   application_id: process.env.API_ID,
 //   application_key: process.env.API_KEY
