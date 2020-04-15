@@ -33,17 +33,26 @@ app.listen(8000, function () {
 
 app.post('/submit', submitHandler);
 
-function submitHandler(req, res) {
-  console.log(req.body);
+async function submitHandler(req, res) {
+  const destination = req.body.destination;
+  getPixabayImage(destination)
+  .then((imgResponse) => {
+    const imageUrl = imgResponse.hits[0].webformatURL;
+    console.log(imageUrl);
+    res.send({ imageUrl });
+  });
 }
 
-function getPixabayImage(query) {
+async function getPixabayImage(query) {
   const pixabayUrl = `https://pixabay.com/api/?key=${process.env.PIXABAY_KEY}&q=${query}`;
-  fetch(pixabayUrl)
+  const imgResponse = fetch(pixabayUrl)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
-    console.log(data);
+    // console.log(data);
+    return data;
   })
+
+  return imgResponse;
 }
