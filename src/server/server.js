@@ -1,4 +1,5 @@
 var path = require('path');
+const fetch = require("node-fetch");
 const express = require('express');
 
 // Read env variables
@@ -13,10 +14,6 @@ if (process.env.PIXABAY_KEY == null) {
 } else {
   console.log('Pixabay API key:', process.env.PIXABAY_KEY)
 }
-// var textapi = new aylien({
-//   application_id: process.env.API_ID,
-//   application_key: process.env.API_KEY
-// });
 
 
 const app = express();
@@ -29,13 +26,24 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.resolve(__dirname, '../../dist')));
 
-console.log(__dirname);
-
-app.get('/', function (req, res) {
-  res.sendFile(path.resolve(__dirname,'../../dist/index.html'));
-})
-
 // designates what port the app will listen to for incoming requests
 app.listen(8000, function () {
     console.log('Example app listening on port http://localhost:8000!');
 })
+
+app.post('/submit', submitHandler);
+
+function submitHandler(req, res) {
+  console.log(req.body);
+}
+
+function getPixabayImage(query) {
+  const pixabayUrl = `https://pixabay.com/api/?key=${process.env.PIXABAY_KEY}&q=${query}`;
+  fetch(pixabayUrl)
+  .then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    console.log(data);
+  })
+}
