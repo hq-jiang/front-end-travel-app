@@ -36,7 +36,8 @@ async function submitHandler(req, res) {
   getPixabayImage(destination)
   .then((imgResponse) => {
     if (imgResponse.hits.length > 0) {
-      const pixabayImageUrl = imgResponse.hits[0].webformatURL;
+      const randomId = getRandomId(imgResponse.hits.length);
+      const pixabayImageUrl = imgResponse.hits[randomId].webformatURL;
       res.send({ pixabayImageUrl });
     } else {
       res.send({ error: true, errorMsg: 'Pixabay error: No hits for query' });
@@ -60,4 +61,8 @@ async function getPixabayImage(query) {
   });
 
   return imgResponse;
+}
+
+function getRandomId(length) {
+  return Math.floor(Math.random() * length);
 }
