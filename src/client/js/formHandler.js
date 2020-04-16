@@ -22,22 +22,18 @@ async function submitInputData() {
   .then((response) => response.json())
   .then((responseData) => {
     console.log(responseData);
-    if (responseData.valid) {
+    if ('error' in responseData) {
+      throw Error(`${responseData.errorMsg}`);
+    } else {
       console.log("Check if status in response data", responseData);
       const resultImageDiv = document.getElementById('result-image');
-      if (responseData.pixabayError === null) {
-        console.log('Received image resource', responseData.pixabayImageUrl);
-        resultImageDiv.innerHTML = `<img src="${responseData.pixabayImageUrl}" height="auto" width="100%">`;
-      } else {
-        throw Error(`${responseData.pixabayError}`);
-      }
-    } else {
-      throw Error(`${responseData.error}`);
+      console.log('Received image resource', responseData.pixabayImageUrl);
+      resultImageDiv.innerHTML = `<img src="${responseData.pixabayImageUrl}" height="auto" width="100%">`;
     }
   })
   .catch((error) => {
     const resultImageDiv = document.getElementById('result-image');
-    resultImageDiv.innerHTML = `<p> ${error} </p>`;
+    resultImageDiv.innerHTML = `<p> ${error.message} </p>`;
   });
 }
 

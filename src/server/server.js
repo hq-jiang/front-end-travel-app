@@ -35,22 +35,16 @@ async function submitHandler(req, res) {
   const destination = req.body.destination;
   getPixabayImage(destination)
   .then((imgResponse) => {
-    let pixabayImageUrl = "";
-    let pixabayError = null;
-    console.log("Image response", imgResponse);
-      if (imgResponse.hits.length > 0) {
-        pixabayImageUrl = imgResponse.hits[0].webformatURL;
-      } else {
-        pixabayError = 'Pixabay error: No hits for query';
-      }
-      console.log(pixabayImageUrl, pixabayError);
-      res.send({ valid: true, pixabayError, pixabayImageUrl });
-
+    if (imgResponse.hits.length > 0) {
+      const pixabayImageUrl = imgResponse.hits[0].webformatURL;
+      res.send({ pixabayImageUrl });
+    } else {
+      res.send({ error: true, errorMsg: 'Pixabay error: No hits for query' });
+    }
   })
   .catch((error) => {
-    // console.log("Going to catch protocol");
     console.log(error);
-    return res.status(500).send({ valid: false, error: 'Could not fetch pixabay images' });
+    return res.status(500).send({ error: true, errorMsg: 'Server error: Could not fetch data' });
   });
 }
 
