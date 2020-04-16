@@ -65,11 +65,16 @@ async function submitHandler(req, res) {
     return { error: true, errorMsg: 'Geonames error: Could not fetch data' };
   });
 
-  // const geonamesData = await geonamesPromise;
+  const geonamesData = await geonamesPromise;
+
+  const weatherbitPromise = getWeatherbitData(geonamesData.lat, geonamesData.lng)
+  .then((weatherbitResponse) => {
+
+  }
 
 
 
-  Promise.all([pixabayPromise, geonamesPromise]).then(function(data) {
+  Promise.all([pixabayPromise, geonamesPromise, weatherbitPromise]).then(function(data) {
     console.log(data);
     res.send(data[0]);
   });
@@ -92,6 +97,16 @@ async function getGeonamesData(query) {
   .then((data) => data);
 
   return geonamesResponse;
+}
+
+async function getWeatherbitData(lat, lng) {
+  const weatherbitUrl = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${process.env.WEATHERBIT_KEY}`
+  console.log(weatherbitUrl);
+  const weatherbitResponse = fetch(weatherbitUrl)
+  .then((response) => response.json())
+  .then((data) => data);
+
+  return weatherbitResponse;
 }
 
 function getRandomId(length) {
