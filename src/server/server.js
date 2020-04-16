@@ -8,7 +8,7 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 
 
-if (process.env.PIXABAY_KEY == null) {
+if (process.env.PIXABAY_KEY == null || process.env.GEONAMES_USER == null) {
   console.log('Env variables not setup correctly, exit program');
   process.exit(1);
 }
@@ -33,34 +33,65 @@ app.post('/submit', submitHandler);
 
 async function submitHandler(req, res) {
   const destination = req.body.destination;
-  getPixabayImage(destination)
+  const pixabayPromise = getPixabayImage(destination)
   .then((imgResponse) => {
     if (imgResponse.hits.length > 0) {
       const randomId = getRandomId(imgResponse.hits.length);
       const pixabayImageUrl = imgResponse.hits[randomId].webformatURL;
-      res.send({ pixabayImageUrl });
+      return { pixabayImageUrl };
     } else {
-      res.send({ error: true, errorMsg: 'Pixabay error: No hits for query' });
+      return { error: true, errorMsg: 'Pixabay error: No results for query' };
     }
   })
   .catch((error) => {
     console.log(error);
-    return res.status(500).send({ error: true, errorMsg: 'Server error: Could not fetch data' });
+    return { error: true, errorMsg: 'Pixabay error: Could not fetch data' };
   });
+
+  const geonamesPromise = getGeonamesData(destination)
+  .then((geonamesResponse) => {
+    if (geonamesResponse.totalResultsCount == 0) {
+      return { error: true, errorMsg: 'Geonames error: No results for query' };
+    } else {
+      return {
+        lat: geonamesResponse.geonames[0].lat,
+        lng: geonamesResponse.geonames[0].lng,
+        countryName: geonamesResponse.geonames[0].countryName,
+      }
+    }
+  })
+  .catch((error) => {
+    console.log(error);
+    return { error: true, errorMsg: 'Geonames error: Could not fetch data' };
+  });
+
+  // const geonamesData = await geonamesPromise;
+
+
+
+  Promise.all([pixabayPromise, geonamesPromise]).then(function(data) {
+    console.log(data);
+    res.send(data[0]);
+  });
+
 }
 
 async function getPixabayImage(query) {
   const pixabayUrl = `https://pixabay.com/api/?key=${process.env.PIXABAY_KEY}&q=${query}`;
   const imgResponse = fetch(pixabayUrl)
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    // console.log(data);
-    return data;
-  });
+  .then((response) => response.json())
+  .then((data) => data);
 
   return imgResponse;
+}
+
+async function getGeonamesData(query) {
+  const geonamesUrl = `http://api.geonames.org/searchJSON?q=${query}&maxRows=1&username=${process.env.GEONAMES_USER}`;
+  const geonamesResponse = fetch(geonamesUrl)
+  .then((response) => response.json())
+  .then((data) => data);
+
+  return geonamesResponse;
 }
 
 function getRandomId(length) {
