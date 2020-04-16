@@ -11,8 +11,6 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 if (process.env.PIXABAY_KEY == null) {
   console.log('Env variables not setup correctly, exit program');
   process.exit(1);
-} else {
-  console.log('Pixabay API key:', process.env.PIXABAY_KEY)
 }
 
 
@@ -37,9 +35,22 @@ async function submitHandler(req, res) {
   const destination = req.body.destination;
   getPixabayImage(destination)
   .then((imgResponse) => {
-    const imageUrl = imgResponse.hits[0].webformatURL;
-    console.log(imageUrl);
-    res.send({ imageUrl });
+    let pixabayImageUrl = "";
+    let pixabayError = null;
+    console.log("Image response", imgResponse);
+      if (imgResponse.hits.length > 0) {
+        pixabayImageUrl = imgResponse.hits[0].webformatURL;
+      } else {
+        pixabayError = 'Pixabay error: No hits for query';
+      }
+      console.log(pixabayImageUrl, pixabayError);
+      res.send({ valid: true, pixabayError, pixabayImageUrl });
+
+  })
+  .catch((error) => {
+    // console.log("Going to catch protocol");
+    console.log(error);
+    return res.status(500).send({ valid: false, error: 'Could not fetch pixabay images' });
   });
 }
 
@@ -52,7 +63,7 @@ async function getPixabayImage(query) {
   .then((data) => {
     // console.log(data);
     return data;
-  })
+  });
 
   return imgResponse;
 }
