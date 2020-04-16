@@ -5,11 +5,23 @@ function getDestination() {
   return processedDestination;
 }
 
+function getDaysUntilTrip() {
+  const dateForm = document.getElementById('input-date');
+  const tripDate = Date.parse(dateForm.value);
+  const today = new Date();
+  console.log('trip day', tripDate);
+  console.log('today', today);
+  return Math.floor((tripDate - today) / (1000 * 60 * 60 * 24));
+}
 
 async function submitInputData() {
   const destination = getDestination();
+  const daysUntilTrip = getDaysUntilTrip();
 
-  const data = { destination };
+  const resultDateDiv = document.getElementById('result-date');
+  resultDateDiv.textContent = `Days until trip: ${daysUntilTrip}`;
+
+  const data = { destination, daysUntilTrip };
 
   fetch('/submit', {
     method: 'post',
