@@ -51,37 +51,50 @@ async function submitHandler(req, res) {
     return { error: true, errorMsg: 'Pixabay error: Could not fetch data' };
   });
 
-  const geonamesPromise = getGeonamesData(destination)
-  .then((geonamesResponse) => {
-    if (geonamesResponse.totalResultsCount == 0) {
-      return { error: true, errorMsg: 'Geonames error: No results for query' };
-    } else {
-      return {
-        lat: geonamesResponse.geonames[0].lat,
-        lng: geonamesResponse.geonames[0].lng,
-        countryName: geonamesResponse.geonames[0].countryName,
+  if (daysUntilTrip < 16) {
+    const geonamesPromise = getGeonamesData(destination)
+    .then((geonamesResponse) => {
+      if (geonamesResponse.totalResultsCount == 0) {
+        return { error: true, errorMsg: 'Geonames error: No results for query' };
+      } else {
+        return {
+          lat: geonamesResponse.geonames[0].lat,
+          lng: geonamesResponse.geonames[0].lng,
+          countryName: geonamesResponse.geonames[0].countryName,
+        }
       }
-    }
-  })
-  .catch((error) => {
-    console.log(error);
-    return { error: true, errorMsg: 'Geonames error: Could not fetch data' };
-  });
+    })
+    .catch((error) => {
+      console.log(error);
+      return { error: true, errorMsg: 'Geonames error: Could not fetch data' };
+    });
 
-  const geonamesData = await geonamesPromise;
+    const geonamesData = await geonamesPromise;
 
-  const weatherbitPromise = getWeatherbitData(geonamesData.lat, geonamesData.lng, daysUntilTrip);
-  // .then((weatherbitResponse) => {
-  //
-  // })
+    const weatherbitPromise = getWeatherbitData(geonamesData.lat, geonamesData.lng, daysUntilTrip)
+    .then((weatherbitResponse) => {
+      return {
+        temp: weatherbitResponse.data[daysUntilTrip].temp,
+        weather: weatherbitResponse.data[daysUntilTrip].weather,
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      return { error: true, errorMsg: 'Weatherbit error: Could not fetch data' };
+    });
 
 
+    Promise.all([pixabayPromise, geonamesPromise, weatherbitPromise]).then(function(data) {
+      console.log(data);
+      res.send({
+        pixabay: data[0],
+        weatherbit: data[2],
+      });
+    });
+  } else {
+    // Return no weather information
 
-  Promise.all([pixabayPromise, geonamesPromise, weatherbitPromise]).then(function(data) {
-    console.log(data);
-    res.send(data[0]);
-  });
-
+  }
 }
 
 async function getPixabayImage(query) {
@@ -104,7 +117,7 @@ async function getGeonamesData(query) {
 
 async function getWeatherbitData(lat, lng, daysUntilTrip) {
   const weatherbitUrl = `https://api.weatherbit.io/v2.0/forecast/daily
-    ?lat=${lat}&lon=${lng}&days=${daysUntilTrip}&key=${process.env.WEATHERBIT_KEY}`;
+    ?lat=${lat}&lon=${lng}&days=${daysUntilTrip + 1}&key=${process.env.WEATHERBIT_KEY}`;
   console.log(weatherbitUrl);
   const weatherbitResponse = fetch(weatherbitUrl)
   .then((response) => response.json())

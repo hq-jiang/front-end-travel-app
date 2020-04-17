@@ -52,18 +52,28 @@ async function submitInputData() {
     .then((response) => response.json())
     .then((responseData) => {
       console.log(responseData);
-      if ('error' in responseData) {
-        throw Error(`${responseData.errorMsg}`);
+      // Udpate UI with pixabay data
+      const resultImageDiv = document.getElementById('result-image');
+      if ('error' in responseData.pixabay) {
+        resultImageDiv.innerHTML = `<p> ${responseData.pixabay.errorMsg} </p>`;
       } else {
-        console.log('Check if status in response data', responseData);
-        const resultImageDiv = document.getElementById('result-image');
-        console.log('Received image resource', responseData.pixabayImageUrl);
-        resultImageDiv.innerHTML = `<img src="${responseData.pixabayImageUrl}" height="auto" width="100%">`;
+        resultImageDiv.innerHTML = `<img src="${responseData.pixabay.pixabayImageUrl}" height="auto" width="100%">`;
+      }
+
+      // Update UI with weatherbit data
+      const resultWeatherDiv = document.getElementById('result-weather');
+      if ('error' in responseData.weatherbit) {
+        resultWeatherDiv.innerHTML = `<p> ${responseData.weatherbit.errorMsg} </p>`;
+      } else {
+        resultWeatherDiv.innerHTML = `
+          <p> Temperature: ${responseData.weatherbit.temp} </p>
+          <p> Conditions: ${responseData.weatherbit.weather.description} </p>
+        `;
       }
     })
     .catch((error) => {
-      const resultImageDiv = document.getElementById('result-image');
-      resultImageDiv.innerHTML = `<p> ${error.message} </p>`;
+      const resultImageDiv = document.getElementById('result-date');
+      resultImageDiv.innerHTML = `<p> ${error} </p>`;
     });
 }
 
