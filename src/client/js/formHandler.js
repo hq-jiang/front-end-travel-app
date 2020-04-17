@@ -1,17 +1,17 @@
 function setCalendarMinDate() {
-  var today = new Date();
-  var dd = today.getDate();
-  var mm = today.getMonth() + 1;
-  var yyyy = today.getFullYear();
-   if(dd<10){
-          dd='0'+dd
-      }
-      if(mm<10){
-          mm='0'+mm
-      }
+  let today = new Date();
+  let dd = today.getDate();
+  let mm = today.getMonth() + 1;
+  const yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = `0${dd}`;
+  }
+  if (mm < 10) {
+    mm = `0${mm}`;
+  }
 
-  today = yyyy + '-' + mm + '-' + dd;
-  document.getElementById("input-date").setAttribute("min", today);
+  today = `${yyyy}-${mm}-${dd}`;
+  document.getElementById('input-date').setAttribute('min', today);
 }
 
 function getDestination() {
@@ -25,8 +25,6 @@ function getDaysUntilTrip() {
   const dateForm = document.getElementById('input-date');
   const tripDate = Date.parse(dateForm.value);
   const today = new Date();
-  console.log('trip day', tripDate);
-  console.log('today', today);
   return Math.floor((tripDate - today) / (1000 * 60 * 60 * 24));
 }
 
@@ -47,22 +45,22 @@ async function submitInputData() {
     },
     body: JSON.stringify(data),
   })
-  .then((response) => response.json())
-  .then((responseData) => {
-    console.log(responseData);
-    if ('error' in responseData) {
-      throw Error(`${responseData.errorMsg}`);
-    } else {
-      console.log("Check if status in response data", responseData);
+    .then((response) => response.json())
+    .then((responseData) => {
+      console.log(responseData);
+      if ('error' in responseData) {
+        throw Error(`${responseData.errorMsg}`);
+      } else {
+        console.log('Check if status in response data', responseData);
+        const resultImageDiv = document.getElementById('result-image');
+        console.log('Received image resource', responseData.pixabayImageUrl);
+        resultImageDiv.innerHTML = `<img src="${responseData.pixabayImageUrl}" height="auto" width="100%">`;
+      }
+    })
+    .catch((error) => {
       const resultImageDiv = document.getElementById('result-image');
-      console.log('Received image resource', responseData.pixabayImageUrl);
-      resultImageDiv.innerHTML = `<img src="${responseData.pixabayImageUrl}" height="auto" width="100%">`;
-    }
-  })
-  .catch((error) => {
-    const resultImageDiv = document.getElementById('result-image');
-    resultImageDiv.innerHTML = `<p> ${error.message} </p>`;
-  });
+      resultImageDiv.innerHTML = `<p> ${error.message} </p>`;
+    });
 }
 
 
