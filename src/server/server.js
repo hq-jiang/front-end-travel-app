@@ -33,6 +33,9 @@ app.post('/submit', submitHandler);
 
 async function submitHandler(req, res) {
   const destination = req.body.destination;
+  const daysUntilTrip = req.body.daysUntilTrip;
+
+
   const pixabayPromise = getPixabayImage(destination)
   .then((imgResponse) => {
     if (imgResponse.hits.length > 0) {
@@ -67,10 +70,10 @@ async function submitHandler(req, res) {
 
   const geonamesData = await geonamesPromise;
 
-  const weatherbitPromise = getWeatherbitData(geonamesData.lat, geonamesData.lng)
-  .then((weatherbitResponse) => {
-
-  }
+  const weatherbitPromise = getWeatherbitData(geonamesData.lat, geonamesData.lng, daysUntilTrip);
+  // .then((weatherbitResponse) => {
+  //
+  // })
 
 
 
@@ -99,8 +102,9 @@ async function getGeonamesData(query) {
   return geonamesResponse;
 }
 
-async function getWeatherbitData(lat, lng) {
-  const weatherbitUrl = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${lat}&lon=${lng}&key=${process.env.WEATHERBIT_KEY}`
+async function getWeatherbitData(lat, lng, daysUntilTrip) {
+  const weatherbitUrl = `https://api.weatherbit.io/v2.0/forecast/daily
+    ?lat=${lat}&lon=${lng}&days=${daysUntilTrip}&key=${process.env.WEATHERBIT_KEY}`;
   console.log(weatherbitUrl);
   const weatherbitResponse = fetch(weatherbitUrl)
   .then((response) => response.json())
