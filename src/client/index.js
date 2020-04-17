@@ -13,7 +13,7 @@ formElement.addEventListener('submit', (event) => {
   event.preventDefault();
 });
 
-formElement.addEventListener('keyup', function(event) {
+formElement.addEventListener('keyup', (event) => {
   // Number 13 is the "Enter" key on the keyboard
   if (event.keyCode === 13) {
     // Cancel the default action, if needed
