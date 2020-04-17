@@ -51,24 +51,31 @@ async function submitInputData() {
   })
     .then((response) => response.json())
     .then((responseData) => {
-      console.log(responseData);
-      // Udpate UI with pixabay data
+      // Get all result elements
       const resultImageDiv = document.getElementById('result-image');
-      if ('error' in responseData.pixabay) {
-        resultImageDiv.innerHTML = `<p> ${responseData.pixabay.errorMsg} </p>`;
-      } else {
-        resultImageDiv.innerHTML = `<img src="${responseData.pixabay.pixabayImageUrl}" height="auto" width="100%">`;
-      }
-
-      // Update UI with weatherbit data
       const resultWeatherDiv = document.getElementById('result-weather');
-      if ('error' in responseData.weatherbit) {
-        resultWeatherDiv.innerHTML = `<p> ${responseData.weatherbit.errorMsg} </p>`;
+
+      if ('noResults' in responseData.geonames) {
+        resultDateDiv.innerHTML = `<p> ${responseData.geonames.errorMsg} </p>`;
+        resultImageDiv.innerHTML = '';
+        resultWeatherDiv.innerHTML = '';
       } else {
-        resultWeatherDiv.innerHTML = `
-          <p> Temperature: ${responseData.weatherbit.temp} </p>
-          <p> Conditions: ${responseData.weatherbit.weather.description} </p>
-        `;
+        // Udpate UI with pixabay data
+        if ('error' in responseData.pixabay) {
+          resultImageDiv.innerHTML = `<p> ${responseData.pixabay.errorMsg} </p>`;
+        } else {
+          resultImageDiv.innerHTML = `<img src="${responseData.pixabay.pixabayImageUrl}" height="auto" width="100%">`;
+        }
+
+        // Update UI with weatherbit data
+        if ('error' in responseData.weatherbit) {
+          resultWeatherDiv.innerHTML = `<p> ${responseData.weatherbit.errorMsg} </p>`;
+        } else {
+          resultWeatherDiv.innerHTML = `
+            <p> Temperature: ${responseData.weatherbit.temp} </p>
+            <p> Conditions: ${responseData.weatherbit.weather.description} </p>
+          `;
+        }
       }
     })
     .catch((error) => {

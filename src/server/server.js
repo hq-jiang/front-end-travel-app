@@ -55,7 +55,10 @@ async function submitHandler(req, res) {
     const geonamesPromise = getGeonamesData(destination)
     .then((geonamesResponse) => {
       if (geonamesResponse.totalResultsCount == 0) {
-        return { error: true, errorMsg: 'Geonames error: No results for query' };
+        return {
+          noResults: true,
+          errorMsg: 'Geonames error: Place probably does not exist, no results for query'
+        };
       } else {
         return {
           lat: geonamesResponse.geonames[0].lat,
@@ -88,6 +91,7 @@ async function submitHandler(req, res) {
       console.log(data);
       res.send({
         pixabay: data[0],
+        geonames: data[1],
         weatherbit: data[2],
       });
     });
