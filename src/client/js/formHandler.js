@@ -11,7 +11,9 @@ function setCalendarMinDate() {
   }
 
   today = `${yyyy}-${mm}-${dd}`;
-  document.getElementById('input-date').setAttribute('min', today);
+  const inputDateElem = document.getElementById('input-date');
+  inputDateElem.setAttribute('min', today);
+  inputDateElem.value = today;
 }
 
 function getDestination() {
@@ -23,9 +25,11 @@ function getDestination() {
 
 function getDaysUntilTrip() {
   const dateForm = document.getElementById('input-date');
-  const tripDate = Date.parse(dateForm.value);
+  const tripDate = new Date(dateForm.value);
   const today = new Date();
-  return Math.floor((tripDate - today) / (1000 * 60 * 60 * 24));
+  const tripDateClip = Date.UTC(tripDate.getFullYear(), tripDate.getMonth(), tripDate.getDate());
+  const todayClip = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+  return Math.floor((tripDateClip - todayClip) / (1000 * 60 * 60 * 24));
 }
 
 async function submitInputData() {
