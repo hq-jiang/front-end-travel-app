@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, '../../dist')));
 
 // designates what port the app will listen to for incoming requests
-app.listen(8000, function () {
+const appServer = app.listen(8000, function () {
     console.log('Example app listening on port http://localhost:8000!');
 })
 
@@ -138,3 +138,9 @@ async function getWeatherbitData(lat, lng, daysUntilTrip) {
 function getRandomId(length) {
   return Math.floor(Math.random() * length);
 }
+
+exports.getPixabayImage = getPixabayImage;
+exports.getGeonamesData = getGeonamesData;
+exports.getWeatherbitData = getWeatherbitData;
+// Export handle for unit test to be able to close the server
+exports.appServer = appServer;

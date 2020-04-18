@@ -30,6 +30,12 @@ GEONAMES_USER=XXXXXXXXXXXXXXXX
 WEATHERBIT_KEY=XXXXXXXXXXXXXXX
 ```
 
+#### Unit tests
+Run tests to check if your setup is correct and API calls are made 
+```
+npm run test
+```
+
 #### Build project
 ```
 cd <project folder>
