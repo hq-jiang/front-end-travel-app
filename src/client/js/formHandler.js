@@ -1,3 +1,15 @@
+// Props to:
+// https://stackoverflow.com/questions/42118296/
+// dynamically-import-images-from-a-directory-using-webpack
+function importAll(r) {
+  const images = {};
+  console.log(r.keys());
+  r.keys().map((item) => { images[item.replace('./', '').replace('.png', '')] = r(item); });
+  return images;
+}
+const images = importAll(require.context('../images/weatherbit-icons', false, /\.(png)$/));
+console.log(images);
+
 function setCalendarMinDate() {
   let today = new Date();
   let dd = today.getDate();
@@ -74,6 +86,7 @@ async function submitInputData() {
           resultWeatherDiv.innerHTML = `
             <p> Temperature: ${responseData.weatherbit.temp} </p>
             <p> Conditions: ${responseData.weatherbit.weather.description} </p>
+            <img src=${images[responseData.weatherbit.weather.icon].default}>
           `;
         }
       }

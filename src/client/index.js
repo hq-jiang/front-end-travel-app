@@ -1,6 +1,7 @@
 import './styles/style.scss';
 import { submitInputData, setCalendarMinDate } from './js/formHandler';
 
+
 // Set minimum date for calendar
 setCalendarMinDate();
 
