@@ -76,7 +76,9 @@ async function submitInputData() {
         if ('error' in responseData.pixabay) {
           resultImageDiv.innerHTML = `<p> ${responseData.pixabay.errorMsg} </p>`;
         } else {
-          resultImageDiv.innerHTML = `<img src="${responseData.pixabay.pixabayImageUrl}" height="auto" width="100%">`;
+          resultImageDiv.innerHTML = `
+            <img src="${responseData.pixabay.pixabayImageUrl}" height="auto" width="100%">
+            <figcaption>Images by pixabay</figcaption>`;
         }
 
         // Update UI with weatherbit data
