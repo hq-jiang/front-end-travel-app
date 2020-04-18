@@ -101,12 +101,6 @@ async function submitInputData() {
     });
 }
 
-
-function getDate() {
-  // TODO;
-}
-
-
 export {
   setCalendarMinDate,
   submitInputData,
