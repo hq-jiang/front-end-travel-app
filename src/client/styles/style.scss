@@ -102,4 +102,7 @@ button::-moz-focus-inner {
 footer {
   grid-area: foot;
   margin: 10px;
+  color: snow;
+
+  a { color: inherit; } 
 }

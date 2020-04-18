@@ -4,7 +4,7 @@
 function importAll(r) {
   const images = {};
   console.log(r.keys());
-  r.keys().map((item) => { images[item.replace('./', '').replace('.png', '')] = r(item); });
+  r.keys().map((item) => { images[item.replace('./', '').replace('.png', '')] = r(item); return images; });
   return images;
 }
 const images = importAll(require.context('../images/weatherbit-icons', false, /\.(png)$/));
