@@ -83,6 +83,6 @@ module.exports = {
     new CleanWebpackPlugin({
       verbose: true
     }),
-    new FaviconsWebpackPlugin('./src/client/images/favicon.ico')
+    new FaviconsWebpackPlugin('./src/client/images/favicon.png')
   ]
 };
