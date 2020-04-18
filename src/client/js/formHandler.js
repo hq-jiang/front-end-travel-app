@@ -86,7 +86,9 @@ async function submitInputData() {
           resultWeatherDiv.innerHTML = `
             <p> Temperature: ${responseData.weatherbit.temp} </p>
             <p> Conditions: ${responseData.weatherbit.weather.description} </p>
-            <img src=${images[responseData.weatherbit.weather.icon].default}>
+            <p style="text-align: center">
+              <img src=${images[responseData.weatherbit.weather.icon].default}>
+            </p>
           `;
         }
       }
